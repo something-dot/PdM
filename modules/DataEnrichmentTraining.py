@@ -89,37 +89,6 @@ def knnImputation(df, kneighbors=3, target='y') -> pd.core.frame.DataFrame:
     knnData.insert(loc=targetIdx, column=target, value=targetColumn)
     return knnData
 
-# #Imputing technique
-# def matrixFactorization(df, target='y') -> pd.core.frame.DataFrame:
-#     copyDf = df.copy(deep=True)
-#     # Store target columnn
-#     targetColumn = copyDf.loc[:, target]
-#     # Store index of target column
-#     targetIdx = copyDf.columns.get_loc(target)
-#     # Subset data to not include the target
-#     copyDf = copyDf.loc[:, df.columns != target]
-#     #
-#     copyDf.values
-#     # Set nans to zero
-#     copyDf[np.isnan(copyDf)] = 0
-#     # Initialize scaler and transform data
-#     scaler = MinMaxScaler()
-#     X = scaler.fit_transform(copyDf)
-#     # Initialize matrix factorization and apply technique to obtain transformed matrix
-#     model = NMF(n_components=None, init='random', random_state=0, max_iter=1000)
-#     W = model.fit_transform(X)
-#     H = model.components_
-#     transformed_matrix = np.dot(W, H)
-#     #Inverse transform transformed matrix
-#     matrixFactDf = scaler.inverse_transform(transformed_matrix)
-#     #Obtain the matrix factorization values where we set 0's before
-#     copyDf[copyDf == 0] = matrixFactDf[copyDf == 0]
-#
-#     copyDf = pd.DataFrame(copyDf)
-#     # Recreate dataframe with target column using destructive technique (no need for assignment)
-#     copyDf.insert(loc=targetIdx, column=target, value=targetColumn)
-#     return copyDf
-
 # Helper function for calculating mean absolute error per feature
 def meanAbsoluteError(true,pred) -> list:
     # True and pred should be same shape and should be dataframe
@@ -174,6 +143,10 @@ def main():
     # String containing best technique and any parameters
     technique = bestEnrichmentTechnique(missingDf, df)
     print(technique)
+
+    # Output new DataFrame into output section
+    df.to_csv("../output/imputed_df.csv")
+
     return
 
 if __name__ == '__main__':
