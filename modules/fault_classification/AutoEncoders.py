@@ -22,6 +22,7 @@ from sklearn.externals.joblib import dump, load
 import h5py
 
 
+@profile
 def test_train_split_standardize(df, seed=456, data_split=0.2):
     df_train, df_test = train_test_split(df, test_size=data_split, random_state=seed)
     df_train, df_valid = train_test_split(df_train, test_size=data_split, random_state=seed)
@@ -42,6 +43,7 @@ def test_train_split_standardize(df, seed=456, data_split=0.2):
     return df_train_0_x_rescaled, df_valid_0_x_rescaled, df_valid_x_rescaled, df_test_x_rescaled, df_valid, df_test
 
 
+@profile
 def auto_encoder_model(input_dim, path, train_test_data, nb_epoch=200, batch_size=128, encoding_dim=32,
                        learning_rate=0.01,
                        optimizer="Adam", activation="relu"):
@@ -74,6 +76,7 @@ def auto_encoder_model(input_dim, path, train_test_data, nb_epoch=200, batch_siz
     return auto_encoder
 
 
+@profile
 def calculate_auc(rescaled, original, path, LSTM_ind=False):
     model = load_model(path)
     valid_x_predictions = model.predict(rescaled)
@@ -92,6 +95,7 @@ def calculate_auc(rescaled, original, path, LSTM_ind=False):
     return roc_auc
 
 
+@profile
 def chose_weights_test_results(negative_weight, positive_weight, path, rescaled, original, LSTM_ind=False):
     auto_encoder = load_model(path)
     # Predictions on validation set
@@ -126,6 +130,7 @@ def chose_weights_test_results(negative_weight, positive_weight, path, rescaled,
     return prob[cost_list.index(min(cost_list))]
 
 
+@profile
 def roc_curve_plot(rescaled, original, path, LSTM_ind=False, ):
     auto_encoder = load_model(path)
     valid_x_predictions = auto_encoder.predict(rescaled)
@@ -154,6 +159,7 @@ def roc_curve_plot(rescaled, original, path, LSTM_ind=False, ):
     plt.show()
 
 
+@profile
 def test_metrics_print(path, rescaled, original, LSTM_ind=False, threshold_fixed=0.5):
     auto_encoder = load_model(path)
     # threshold_fixed = chose_weights_test_results(negative_weight,positive_weight,path,rescaled,original,LSTM_ind)
@@ -187,6 +193,7 @@ def test_metrics_print(path, rescaled, original, LSTM_ind=False, threshold_fixed
     print('accuracy', (tp + tn) / (tp + tn + fp + fn) * 100)
 
 
+@profile
 def hyper_param_tune(df, activation_list, optimizer_list, learn_rate_list, path):
     dic = {}
     train_test_valid_standardised_data = test_train_split_standardize(df)
@@ -203,10 +210,11 @@ def hyper_param_tune(df, activation_list, optimizer_list, learn_rate_list, path)
     results = max(dic, key=dic.get)
     auto_encoder = auto_encoder_model(input_dim=train_test_valid_standardised_data[0].shape[1], train_test_data=train_test_valid_standardised_data,
                                       nb_epoch=1000, batch_size=32, encoding_dim=200, learning_rate=results[2],
-                                      activation=results[0], optimizer=results[1], path=path)
+                                      activation=results[0], optimizer=results[1])
     return auto_encoder
 
 
+@profile
 def get_predictions(path, rescaled, original, LSTM_ind=False, threshold_fixed=0.5):
     auto_encoder = load_model(path)
     # threshold_fixed = chose_weights_test_results(negative_weight,positive_weight,path,rescaled,original,LSTM_ind)
