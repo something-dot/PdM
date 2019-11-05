@@ -203,7 +203,7 @@ def hyper_param_tune(df, activation_list, optimizer_list, learn_rate_list, path)
     results = max(dic, key=dic.get)
     auto_encoder = auto_encoder_model(input_dim=train_test_valid_standardised_data[0].shape[1], train_test_data=train_test_valid_standardised_data,
                                       nb_epoch=1000, batch_size=32, encoding_dim=200, learning_rate=results[2],
-                                      activation=results[0], optimizer=results[1])
+                                      activation=results[0], optimizer=results[1], path=path)
     return auto_encoder
 
 
