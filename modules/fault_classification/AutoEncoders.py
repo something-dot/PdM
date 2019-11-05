@@ -22,6 +22,18 @@ from sklearn.externals.joblib import dump, load
 import h5py
 
 
+def profile(func):
+    import time
+    import logging
+
+    def wrap(*args, **kwargs):
+        started_at = time.time()
+        result = func(*args, **kwargs)
+        logging.info(time.time() - started_at)
+        return result
+    return wrap
+
+
 @profile
 def test_train_split_standardize(df, seed=456, data_split=0.2):
     df_train, df_test = train_test_split(df, test_size=data_split, random_state=seed)
@@ -242,7 +254,7 @@ if __name__ == '__main__':
         df = pd.read_csv("../output/imputed_df.csv")
 
     # If no mode, just make a model
-    if path.exists('../../output/autoencoder.h5') == False:
+    if not path.exists('../output/autoencoder.h5'):
         activation_list = ['softmax', 'softplus', 'softsign', 'relu', 'tanh', 'sigmoid', 'hard_sigmoid', 'linear']
         optimizer_list = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
         learn_rate_list = [0.001, 0.01]
