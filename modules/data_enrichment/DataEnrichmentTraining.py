@@ -36,7 +36,7 @@ def createMissingValues(df, target='y', percentNan=0.1) -> pd.core.frame.DataFra
     # Create data with null values based on some percentage
     dataWithNan = copyDf.mask(np.random.random(copyDf.shape) < percentNan)
     # Recreate dataframe with target column using destructive technique (no need for assignment)
-    dataWithNan.insert(loc=targetIdx,column=target, value=targetColumn)
+    dataWithNan.insert(loc=targetIdx, column=target, value=targetColumn)
     return dataWithNan
 
 # Imputing technique
@@ -56,7 +56,7 @@ def mice(df, target='y') -> pd.core.frame.DataFrame:
     imputedData.insert(loc=targetIdx, column=target, value=targetColumn)
     return imputedData
 
-#Imputing technique
+# Imputing technique
 @profile
 def exponentialMovingAverage(df, alphaVals, adjust=False, ignore_na=True, target='y', fillNull=0) -> pd.core.frame.DataFrame:
     copyDf = df.copy(deep=True)
@@ -89,19 +89,20 @@ def knnImputation(df, kneighbors=3, target='y') -> pd.core.frame.DataFrame:
     knnData.insert(loc=targetIdx, column=target, value=targetColumn)
     return knnData
 
+
 # Helper function for calculating mean absolute error per feature
 def meanAbsoluteError(true,pred) -> list:
     # True and pred should be same shape and should be dataframe
-    n,m = true.shape
+    n, m = true.shape
     # Convert to 2-by-2 array
     arrayOne = true.values
     arrayTwo = pred.values
     # Calculate mape along the features of each array
-    result = [mean_absolute_error(arrayOne[:,columnIdx], arrayTwo[:,columnIdx]) * 100 for columnIdx in range(m)]
+    result = [mean_absolute_error(arrayOne[:, columnIdx], arrayTwo[:, columnIdx]) * 100 for columnIdx in range(m)]
     return result
 
 
-def bestEnrichmentTechnique(missingDf, realDf, target='y', alphas=np.linspace(0.1, 1, 10), knns=list(range(3,7,1))) -> str:
+def bestEnrichmentTechnique(missingDf, realDf, target='y', alphas=np.linspace(0.1, 1, 10), knns=list(range(3, 7, 1))) -> str:
     # Create empty dataframe to store results of data enrichment technique
     testResults = pd.DataFrame()
     # Create a features column storing all the column names
@@ -126,14 +127,14 @@ def bestEnrichmentTechnique(missingDf, realDf, target='y', alphas=np.linspace(0.
     # #Calculate mean absolute percent error for matrix factorization
     # testResults['matrixFactorization'] = meanAbsoluteError(realDf, factorizationDf)
     #Show results for the different techniques and aggregate across all the features
-    print(testResults.describe().loc['mean',:])
-    return (testResults.describe().loc['mean',:]).idxmin()
+    print(testResults.describe().loc['mean', :])
+    return (testResults.describe().loc['mean', :]).idxmin()
 
 
 def main():
     '''This approach does not consider train/test for imputation & only works because original data has no missing values'''
     # Read in data
-    df = pd.read_csv(sys.argv[1])
+    df = pd.read_csv(sys.argv[1])  # "../../input/df.csv"
     # Remove time column, and the categorical columns
     df = df.drop(['time', 'x28', 'x61'], axis=1)
     # Reduce dataset size for local implementation
@@ -145,9 +146,15 @@ def main():
     print(technique)
 
     # Output new DataFrame into output section
-    df.to_csv("../output/imputed_df.csv")
-
+    if len(sys.argv) < 3:
+        df.to_csv("../output/imputed_df.csv")
+    else:
+        if sys.argv[2].endswith(".csv"):
+            df.to_csv(sys.argv[2])
+        else:
+            print("In valid output file extension")
     return
+
 
 if __name__ == '__main__':
     main()
