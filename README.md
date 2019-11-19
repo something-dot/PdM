@@ -18,14 +18,14 @@ Folder Structure for this Github
     ├	   └── classical_model.py            
     ├── output/
     ├	├── DE_output/
-    ├   ├  ├── DE_output.txt
+    ├      ├  ├── DE_output.txt
     ├	└── FC_output/
     ├	   ├── DL_output/
-    ├	   |   ├── *.h5
+    ├	      ├   ├── *.h5
     ├	   ├── CL_output/
-    ├      |   ├── *.pickle
+    ├         ├   ├── *.pickle
     ├	   └── FC_pred/
-    ├          ├── results.csv                  
+    ├             ├── results.csv                  
     ├── results/
     ├   ├── DE_results/
     ├   ├   ├── DE_techniques.csv
