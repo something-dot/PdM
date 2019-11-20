@@ -1,7 +1,7 @@
 # PdM
 ============================
 
-Folder Structure for this Github
+> Folder Structure for this Github
 
     .
     ├── input
@@ -41,3 +41,39 @@ Folder Structure for this Github
     |           └── *_time.csv                           
     ├── README.md
     └── requirements.txt
+
+
+
+========================
+
+#### Below we will go through the description of what each folder does
+
+## Input
+
+> The Input folder contains the input file, in our case it is a .csv
+
+## Modules
+
+> The modules folder contains the modules which we will be using for fault detection
+> The modules for now are Data Enrichment and Fault Classification
+
+#### Data Enrichment
+
+> This module takes in a dataframe and performs an imputation technique that fills in
+> missing data.
+
+#### Fault Classification
+
+> This module predicts whether or not a given dataset of sensor readings is a fault
+> or not a fault.
+
+## Output
+
+> Outputs of each module are placed here, the outputs here are intended to be read as inputs for 
+> the next module in the PdM pipeline
+
+## Results 
+
+> Results of each module are placed here, the results are resulting tables, graphs, scores of 
+> the module calculates. These results are not read by the pipeline, they are meant to be read
+> by a human interpreter.
