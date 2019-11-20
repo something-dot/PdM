@@ -18,7 +18,8 @@
     |	   └── classical_model.py            
     ├── output/
     |	├── DE_output/
-    |       |  └── DE_output.txt
+    |	|  ├── DE_output.txt
+    |	|  └── *.csv
     |	└── FC_output/
     |	   ├── DL_output/
     |	   |   └── *.h5
