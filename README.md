@@ -25,22 +25,22 @@
     |	      ├── DL_output/
     |	      |       └── *.h5
     |	      ├── CL_output/
-    |             |   └── *.pickle
+    |             |      └── *.pickle
     |	      └── FC_pred/
-    |                 └── results.csv                  
+    |                    └── results.csv                  
     ├── results/
-    |      ├── DE_results/
-    |      |      ├── DE_techniques.csv
-    |      |      └── DE_time.csv
-    |      └── FC_results/        
-    |             ├── DL_results/
-    |             |      ├── roc.png
-    |             |      ├── conf.png
-    |             |      └── *_time.csv
-    |             └── CL_results/    
-    |                    ├── roc.png
-    |                    ├── conf.png
-    |                    └── *_time.csv                           
+    |       ├── DE_results/
+    |       |      ├── DE_techniques.csv
+    |       |      └── DE_time.csv
+    |       └── FC_results/        
+    |              ├── DL_results/
+    |              |      ├── roc.png
+    |              |      ├── conf.png
+    |              |      └── *_time.csv
+    |              └── CL_results/    
+    |                     ├── roc.png
+    |                     ├── conf.png
+    |                     └── *_time.csv                           
     ├── README.md
     └── requirements.txt
 
