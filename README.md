@@ -11,8 +11,9 @@
     |	|  ├── DE_train.py
     |	|  └── DE_deploy.py
     |	├── FC_mod/
-    |	|  ├── FC_train.py
-    |	|  └── FC_deploy.py
+    |	|  ├── CM_train.py
+    |	|  ├── DL_train.py
+    |	|  └── best_deploy.py
     |	└── helper_class/       
     |	   ├── time_shift.py
     |	   └── classical_model.py            
